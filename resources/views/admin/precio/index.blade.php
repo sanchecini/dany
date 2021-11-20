@@ -1,44 +1,92 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.admin')
+@section('title','Gestión de precios')
+@section('styles')
+<style type="text/css">
+    .unstyled-button {
+        border: none;
+        padding: 0;
+        background: none;
+      }
+</style>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+@endsection
+@section('options')
+@endsection
+@section('preference')
+@endsection
+@section('content')
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            Precios
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Panel administrador</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Precios</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="d-flex justify-content-between">
+                        <h4 class="card-title">Precios</h4>
+                        {{--  <i class="fas fa-ellipsis-v"></i>  --}}
+                        <div class="btn-group">
+                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a href="{{route('precios.create')}}" class="dropdown-item">Agregar</a>
+                              {{--  <button class="dropdown-item" type="button">Another action</button>
+                              <button class="dropdown-item" type="button">Something else here</button>  --}}
+                            </div>
+                          </div>
+                    </div>
+           
+                                
+                                @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
+                  
+                    @foreach ($precios as $precio)
+                                @foreach($array as $usuario)
+                                <a href="{{asset('panel/images/logo/.$usuario')}}" data-lightbox="imagen_8">
+<img src="{{asset('panel/images/logo/'.$usuario)}}" alt="Icono producto">
+</a>
+    <h1>{{$precio->producto}}</h1>
+                                      
+    <h2>$ {{$precio->precio}}</h2>
+    <h2>{{$precio->cliente}}</h2>
+                                                 
+                        
+                              
 
-    <title>Ejemplo</title>
-  </head>
-  <body>
-    
-<div class="container mt-4">
-          <div class="row justify-content-center"> 
-            <div class="col-auto">
-              <h3> Cliente <span badge bg-secondary>{{$producto->name}}</span> tiene los productos:</h3>
 
-                <table class="table table-striped table-hover">
-                  <thead>
-                    <tr>
-                      <th>Clientes</th>
-                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($producto->clientes as $registro)
-                    <tr>
-                       <td> {{$registro->name}}</td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-        </div>        
-     </div>
-    
+                                       
+                                 
+                                @endforeach
+                                @endforeach
+                              
+
+                       
+                </div>
+
+
+
+                {{--  <div class="card-footer text-muted">
+                    {{$precios->render()}}
+                </div>  --}}
+            </div>
+        </div>
+    </div>
 </div>
-   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-   
-  </body>
-</html>
+@endsection
+@section('scripts')
+{!! Html::script('panel/js/data-table.js') !!}
+@endsection

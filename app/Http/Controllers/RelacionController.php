@@ -14,31 +14,106 @@ class RelacionController extends Controller
 {
     public function index(){
 
-
-// SELECT cliente_productos.cliente_id, cliente_productos.producto_id 
-// FROM cliente_productos
-// INNER JOIN clientes ON cliente_productos.cliente_id = clientes.id
-// INNER JOIN productos ON cliente_productos.producto_id = productos.id
+  //  $precios = ClienteProducto::get();
   
+//   $precios = ClienteProducto::select('clientes.cliente','productos.producto', 'cliente_productos.precio')
+//   ->join('clientes', 'cliente_productos.cliente_id', '=', 'clientes.id')
+//   ->join('productos', 'cliente_productos.producto_id', '=', 'productos.id')
+//   ->where('clientes.id', '=', 1)
+//   ->get();
 
-  $precios = ClienteProducto::select('clientes.cliente','productos.producto')
-  ->join('clientes', 'cliente_productos.cliente_id', '=', 'clientes.id')
-  ->join('productos', 'cliente_productos.producto_id', '=', 'productos.id')
-  ->get();
+//   $array = array(
+//     "foo" => "danny.png"
+   
+// );
 
   
  
-   return view("welcome", compact('precios'));
-
-}
-// SELECT clientes.name, productos.name 
-// FROM cliente_productos 
-// JOIN clientes ON clientes.id = cliente_productos.cliente_id 
-// JOIN productos ON productos.id = cliente_productos.producto_id;
+//    return view("admin.precio.index", compact('precios','array'));
 
 }
 
-// SELECT Tabla1.OrderID, Tabla2.CustomerName, Tabla3.OrderDate
-// FROM Tabla1
-// INNER JOIN Tabla2 ON Tabla1.CustomerID=Tabla2.CustomerID
-// INNER JOIN Tabla3 ON Tabla1.CustomerID=Tabla3.CustomerID
+public function create()
+    {
+      
+//       $precio = new ClienteProducto();
+//     $productos = Producto::pluck('producto','id');
+//    $clientes = Cliente::pluck('cliente','id');
+//    $precios = ClienteProducto::select('clientes.cliente','productos.producto', 'cliente_productos.precio','clientes.cliente')
+//    ->join('clientes', 'cliente_productos.cliente_id', '=', 'clientes.id')
+//    ->join('productos', 'cliente_productos.producto_id', '=', 'productos.id')
+//    ->where('clientes.id', '=', 1)
+//    ->get();
+ 
+//  $select = Cliente::find(1);
+
+   return view('admin.precio.create');
+
+    }
+
+
+ public function agregar($id){
+
+  $cliente = Cliente::find($id);
+
+  $productos = Producto::pluck('producto','id');
+
+  $precios = ClienteProducto::select('clientes.cliente','clientes.id','productos.producto', 'cliente_productos.precio')
+     ->join('clientes', 'cliente_productos.cliente_id', '=', 'clientes.id')
+     ->join('productos', 'cliente_productos.producto_id', '=', 'productos.id')
+     ->where('clientes.id', '=', $id)
+     ->get();
+  
+     $array = array(
+           "foo" => "danny.png"
+          
+       );
+  
+     return view('admin.precio.create', compact('cliente','precios','productos','array'));
+ }
+
+    public function store(Request $request)
+    {
+        
+
+      $precio = ClienteProducto::create($request->all());
+
+        return redirect()->route('clientes.index')
+            ->with('success', 'Precios created successfully.');
+    }
+    
+
+    public function edit($id)
+    {
+  //    $array = array(
+  //      "foo" => "danny.png"
+      
+  //  );
+  $cliente = Cliente::find($id);
+
+  
+
+  $productos = Producto::pluck('producto','id');
+  
+
+  $precios = ClienteProducto::select('clientes.cliente','clientes.id','productos.id','productos.producto', 'cliente_productos.precio')
+     ->join('clientes', 'cliente_productos.cliente_id', '=', 'clientes.id')
+     ->join('productos', 'cliente_productos.producto_id', '=', 'productos.id')
+     ->where('clientes.id', '=', $id)
+     ->get();
+  
+ 
+  
+     return view('admin.precio.edit', compact('cliente','precios','productos'));
+    }
+
+    public function update(Request $request, ClienteProducto $precio )
+    {
+      $precio->update($request->all());
+      return redirect()->route('clientes.index')
+          ->with('success', 'Cliente actualizado correctamente');
+    }
+
+    
+
+}

@@ -2,21 +2,18 @@
     <ul class="nav">
         <li class="nav-item nav-profile">
             <div class="nav-link">
-                <div class="profile-image">
-                    <img src="{{asset('panel/images/faces/face16.jpg')}}" alt="image" />
-                </div>
-                <div class="profile-name">
+            <div class="profile-name">
                     <p class="name">
-                    Nombre
+                        {{ Auth::user()->name }}
                     </p>
                     <p class="designation">
-                     Email
+                        {{ Auth::user()->username }}
                     </p>
                 </div>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{route('home')}}">
                 <i class="fa fa-home menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>

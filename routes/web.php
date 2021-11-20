@@ -13,13 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function() {
+    return redirect()->route('login');
 });
 
-Route::get('/', 'App\Http\Controllers\RelacionController@index');
 
 // Route::resource('productos', App\Http\Controllers\ProductoController::class);
 Route::resource('clientes', App\Http\Controllers\ClienteController::class);
 Route::resource('productos', App\Http\Controllers\ProductoController::class);
+Route::resource('precios', App\Http\Controllers\RelacionController::class);
 
+Route::get('precios/agregar/{id}', 'App\Http\Controllers\RelacionController@agregar')->name('precios.agregar');;
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

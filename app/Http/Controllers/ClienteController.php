@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Cliente;
 
+use App\Models\ClienteProducto;
+use App\Models\Producto;
+
 class ClienteController extends Controller
 {
     /**
@@ -16,7 +19,15 @@ class ClienteController extends Controller
     public function index()
     {
         $clientes = Cliente::get();
-        return view('admin.cliente.index', compact('clientes'));
+                
+        $array = array(
+            "foo" => "danny.png",
+            "bar" => "logo.png",
+        );
+
+
+
+        return view('admin.cliente.index', compact('clientes','array'));
     }
 
     
@@ -37,11 +48,18 @@ class ClienteController extends Controller
     }
 
     
-    public function show(Cliente $cliente)
+    public function show($id)
     {
-       
+        $cliente = Cliente::find($id);
+        $producto = Producto::find($id);
 
-        return view('admin.cliente.show', compact('cliente'));
+        $precios = ClienteProducto::select('clientes.cliente','clientes.id','productos.producto', 'cliente_productos.precio')
+     ->join('clientes', 'cliente_productos.cliente_id', '=', 'clientes.id')
+     ->join('productos', 'cliente_productos.producto_id', '=', 'productos.id')
+     ->where('clientes.id', '=', $id)
+     ->get();
+
+        return view('admin.cliente.show', compact('precios','cliente','producto'));
     }
 
     

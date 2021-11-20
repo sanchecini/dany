@@ -57,6 +57,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombre</th>
+                                    <th>Kilos</th>
                                    
                                     <th>Acciones</th>
                                 </tr>
@@ -67,6 +68,9 @@
                                     <th scope="row">{{$producto->id}}</th>
                                     <td>
                                         <a href="{{route('productos.show',$producto)}}">{{$producto->producto}}</a>
+                                    </td>
+                                    <td>
+                                        {{$producto->kilos}}
                                     </td>
                                    
                                     <td style="width: 50px;">

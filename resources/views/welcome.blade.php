@@ -29,8 +29,8 @@
       @foreach($precios as $precio)
         <tr>
           <td scope="row"></td>
-          <td>{{$precio->cliente}}</td>
-          <td>{{$precio->producto}}</td>
+          <td>{{$precio->cliente_id}}</td>
+          <td>{{$precio->producto_id}}</td>
           
           
 

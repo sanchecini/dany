@@ -84,6 +84,10 @@
                                         <a class="jsgrid-button jsgrid-edit-button" href="{{route('clientes.edit', $cliente)}}" title="Editar">
                                             <i class="far fa-edit"></i>
                                         </a>
+
+                                        <a class="jsgrid-button jsgrid-edit-button" href="{{route('precios.agregar', $cliente)}}" title="Precios">
+                                        <i class="fas fa-address-book"></i>
+                                        </a>
                                         
                                         <button class="jsgrid-button jsgrid-delete-button unstyled-button" type="submit" title="Eliminar">
                                             <i class="far fa-trash-alt"></i>
@@ -96,9 +100,21 @@
                             </tbody>
                         </table>
                     </div>
+
+            
+                @foreach($array as $usuario)
+                <p>{{$usuario}}</p>
+                <a href="{{asset('panel/images/logo/.$usuario')}}" data-lightbox="imagen_8">
+<img src="{{asset('panel/images/logo/'.$usuario)}}" alt="Icono producto">
+</a>
+            @endforeach  
+            
+           
+
                 </div>
                 {{--  <div class="card-footer text-muted">
                     {{$clientes->render()}}
+                    
                 </div>  --}}
             </div>
         </div>
